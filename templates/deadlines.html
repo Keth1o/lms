@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Дедлайни</h3>
+
+{% if assignments %}
+
+<div class="row g-3">
+
+{% for a in assignments %}
+<div class="col-md-6">
+    <div class="card p-3">
+
+        <h5>{{ a.title }}</h5>
+        <p class="text-muted">{{ a.description }}</p>
+
+        <p><b>Дедлайн:</b> {{ a.deadline }}</p>
+
+        <a href="{% url 'submit_assignment' a.id %}" class="btn btn-success">
+            Здати
+        </a>
+
+    </div>
+</div>
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<p>Немає незданих завдань 🎉</p>
+
+{% endif %}
+
+{% endblock %}

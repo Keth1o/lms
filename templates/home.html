@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Доступні курси</h3>
+
+<div class="row g-4">
+
+{% for course in courses %}
+
+<div class="col-md-4">
+
+<div class="card p-3">
+
+<h5>{{ course.title }}</h5>
+
+<p class="text-muted">
+{{ course.description|truncatewords:15 }}
+</p>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>{{ course.title }}</h3>
+
+<p class="text-muted">{{ course.description }}</p>
+
+<hr>
+
+<h5 class="mb-3">Предмети</h5>
+
+<div class="row g-3">
+
+{% for subject in subjects %}
+
+<div class="col-md-6">
+
+<div class="card p-3">
+
+<h6>{{ subject.name }}</h6>
+
+<p class="text-muted small">
+{{ subject.description|truncatewords:10 }}
+</p>
+
+<a href="{% url 'subject_detail' subject.id %}" class="btn btn-outline-primary btn-sm">
+Відкрити
+</a>
+
+</div>
+
+{% if user.is_teacher %}
+<a href="{% url 'register_student' course.id %}" class="btn btn-success mb-3">
+    Зареєструвати учня
+</a>
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

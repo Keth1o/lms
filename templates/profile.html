@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+<div class="col-md-6">
+
+<div class="card p-4 text-center">
+
+<input type="file" name="avatar" class="form-control">
+
+<h5>{{ user.username }}</h5>
+
+<p class="text-muted">{{ user.email }}</p>
+
+<hr>
+
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+
+<div class="mb-3 text-start">
+<label>Ім'я</label>
+{{ form.first_name }}
+</div>
+
+<div class="mb-3 text-start">
+<label>Email</label>
+{{ form.email }}
+</div>
+
+<div class="mb-3 text-start">
+<label>Аватар</label>
+<img src="{{ user.avatar.url }}" class="rounded-circle mb-3" width="120">
+</div>
+
+<button class="btn btn-primary w-100">
+Зберегти
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

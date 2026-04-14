@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Розклад</h3>
+
+{% if user.is_teacher %}
+<a href="{% url 'add_schedule' course.id %}" class="btn btn-primary mb-3">
+    Додати розклад
+</a>
+{% endif %}
+
+{% if schedules %}
+
+<table class="table">
+
+<tr>
+<th>Дата</th>
+<th>Назва</th>
+<th>Опис</th>
+</tr>
+
+{% for s in schedules %}
+
+<tr>
+<td>{{ s.date }}</td>
+<td>{{ s.title }}</td>
+<td>{{ s.description }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% else %}
+
+<p>Розкладу немає</p>
+
+{% endif %}
+
+{% endblock %}

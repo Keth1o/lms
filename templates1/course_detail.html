@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>{{ course.title }}</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container mt-4">
+
+<div class="row">
+
+<div class="col-md-8">
+
+<h2>{{ course.title }}</h2>
+
+<p>{{ course.description }}</p>
+
+{% if user.is_superuser or user.role == 'teacher' %}
+
+<a href="{% url 'register_student' %}" class="btn btn-warning">
+Зареєструвати учня
+</a>
+
+{% endif %}
+
+</div>
+
+</div>
+
+
+<!-- КНОПКИ ТАБІВ -->
+
+<div class="mt-4 mb-3">
+
+<button onclick="showTab('schedule')" class="btn btn-primary">
+Розклад
+</button>
+
+<button onclick="showTab('deadline')" class="btn btn-primary">
+Дедлайни
+</button>
+
+<button onclick="showTab('subjects')" class="btn btn-primary">
+Предмети
+</button>
+
+</div>
+
+
+<!-- РОЗКЛАД -->
+
+<div id="schedule">
+
+<h3>Розклад</h3>
+
+{% if schedule %}
+
+{% for s in schedule %}
+
+<div class="card mb-2">
+<div class="card-body">
+
+<b>{{ s.title }}</b>
+
+<br>
+
+Дата: {{ s.date }}
+
+<br>
+
+{{ s.description }}
+
+</div>
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p>Розкладу поки немає.</p>
+
+{% endif %}
+
+
+{% if user.role == 'teacher' or user.is_superuser %}
+
+<a href="{% url 'add_schedule' course.id %}"
+class="btn btn-success mt-2">
+
+Додати розклад
+
+</a>
+
+{% endif %}
+
+</div>
+
+
+<!-- ДЕДЛАЙНИ -->
+
+<div id="deadline" style="display:none;">
+
+<h3>Дедлайни</h3>
+
+{% if deadlines %}
+
+{% for d in deadlines %}
+
+<div class="card mb-2">
+
+<div class="card-body">
+
+<b>{{ d.title }}</b>
+
+<br>
+
+Дедлайн: {{ d.deadline }}
+
+<br>
+
+{{ d.description }}
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<p>Завдань немає.</p>
+
+{% endif %}
+
+{% if user.role == 'teacher' or user.is_superuser %}
+
+<a href="{% url 'create_assignment' %}" class="btn btn-success mt-2">
+Створити завдання
+</a>
+
+{% endif %}
+
+</div>
+
+
+<!-- ПРЕДМЕТИ -->
+
+<div id="subjects" style="display:none;">
+
+<h3>Предмети</h3>
+
+{% if subjects %}
+
+{% for subject in subjects %}
+
+<a href="{% url 'subject_detail' subject.id %}"
+class="btn btn-outline-primary mb-2">
+
+{{ subject.name }}
+
+</a>
+
+<br>
+
+{% endfor %}
+
+{% else %}
+
+<p>Предметів поки немає.</p>
+
+{% endif %}
+
+{% if user.role == 'teacher' or user.is_superuser %}
+
+<a href="{% url 'create_subject' %}" class="btn btn-success mt-2">
+Додати предмет
+</a>
+
+{% endif %}
+
+</div>
+
+
+<hr>
+
+<a href="{% url 'course_list' %}" class="btn btn-secondary">
+Назад до курсів
+</a>
+
+</div>
+
+
+<script>
+
+function showTab(tab){
+
+document.getElementById('schedule').style.display='none';
+document.getElementById('deadline').style.display='none';
+document.getElementById('subjects').style.display='none';
+
+document.getElementById(tab).style.display='block';
+
+}
+
+</script>
+
+</body>
+
+</html>
